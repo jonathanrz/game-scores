@@ -36,17 +36,23 @@ if (stats.isSymbolicLink()) {
 
 const babel = require(moduleBasePath + 'babel-core');
 const crypto = require('crypto');
-const externalHelpersPlugin = require(moduleBasePath + 'babel-plugin-external-helpers');
+const externalHelpersPlugin = require(moduleBasePath +
+  'babel-plugin-external-helpers');
 const generate = require(moduleBasePath + 'babel-generator').default;
-const inlineRequiresPlugin = require(moduleBasePath + 'babel-preset-fbjs/plugins/inline-requires');
-const makeHMRConfig = require(moduleBasePath + 'babel-preset-react-native/configs/hmr');
-const resolvePlugins = require(moduleBasePath + 'babel-preset-react-native/lib/resolvePlugins');
+const inlineRequiresPlugin = require(moduleBasePath +
+  'babel-preset-fbjs/plugins/inline-requires');
+const makeHMRConfig = require(moduleBasePath +
+  'babel-preset-react-native/configs/hmr');
+const resolvePlugins = require(moduleBasePath +
+  'babel-preset-react-native/lib/resolvePlugins');
 
-const { compactMapping } = require(moduleBasePath + 'metro-bundler/src/Bundler/source-map');
+const { compactMapping } = require(moduleBasePath +
+  'metro-bundler/src/Bundler/source-map');
 
 const cacheKeyParts = [
   fs.readFileSync(__filename),
-  require(moduleBasePath + 'babel-plugin-external-helpers/package.json').version,
+  require(moduleBasePath + 'babel-plugin-external-helpers/package.json')
+    .version,
   require(moduleBasePath + 'babel-preset-fbjs/package.json').version,
   require(moduleBasePath + 'babel-preset-react-native/package.json').version,
 ];
@@ -101,7 +107,9 @@ const getBabelRC = (function() {
 
       // Require the babel-preset's listed in the default babel config
       // $FlowFixMe: dynamic require can't be avoided
-      babelRC.presets = babelRC.presets.map(preset => require('babel-preset-' + preset));
+      babelRC.presets = babelRC.presets.map(preset =>
+        require('babel-preset-' + preset)
+      );
       babelRC.plugins = resolvePlugins(babelRC.plugins);
     } else {
       // if we find a .babelrc file we tell babel to use it
@@ -137,7 +145,8 @@ function buildBabelConfig(filename, options) {
   const extraPlugins = [externalHelpersPlugin];
 
   var inlineRequires = options.inlineRequires;
-  var blacklist = typeof inlineRequires === 'object' ? inlineRequires.blacklist : null;
+  var blacklist =
+    typeof inlineRequires === 'object' ? inlineRequires.blacklist : null;
   if (inlineRequires && !(blacklist && filename in blacklist)) {
     extraPlugins.push(inlineRequiresPlugin);
   }
@@ -187,7 +196,9 @@ function transform({ filename, options, src }) {
         ast,
         code: result.code,
         filename,
-        map: options.generateSourceMaps ? result.map : result.rawMappings.map(compactMapping),
+        map: options.generateSourceMaps
+          ? result.map
+          : result.rawMappings.map(compactMapping),
       };
     }
   } catch (e) {
