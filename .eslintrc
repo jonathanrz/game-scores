@@ -1,4 +1,5 @@
 {
+  "extends": ["react-native-prettier"],
   "plugins": ["react", "react-native", "babel"],
   "parser": "babel-eslint",
   "parserOptions": {
